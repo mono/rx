@@ -18,5 +18,15 @@ namespace ReactiveTests
             return a != null && a.FrameworkDisplayName == ".NET Portable Subset";
 #endif
         }
+
+        public static string GetTestBaseDirectory()
+        {
+#if MONODROID || MONOTOUCH
+            // There is no accessible file system inside android application.
+            return System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
+#else
+            return System.AppDomain.CurrentDomain.BaseDirectory;
+#endif
+        }
     }
 }

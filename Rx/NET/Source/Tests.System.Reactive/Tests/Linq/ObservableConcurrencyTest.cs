@@ -9,9 +9,18 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
+#if !NO_WINDOWS_THREADING
 using System.Windows.Threading;
+#endif
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using ReactiveTests.Dummies;
 
 #if HAS_WINFORMS
@@ -42,6 +51,7 @@ namespace ReactiveTests.Tests
             ReactiveAssert.Throws<ArgumentNullException>(() => ControlObservable.ObserveOn<int>(someObservable, default(Label)));
 #endif
 
+#if !NO_WINDOWS_THREADING
 #if USE_SL_DISPATCHER
             ReactiveAssert.Throws<ArgumentNullException>(() => Observable.ObserveOn<int>(default(IObservable<int>), new DispatcherScheduler(System.Windows.Deployment.Current.Dispatcher)));
 #else
@@ -55,11 +65,11 @@ namespace ReactiveTests.Tests
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherObservable.ObserveOn<int>(default(IObservable<int>), Dispatcher.CurrentDispatcher));
 #endif
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherObservable.ObserveOn<int>(someObservable, default(Dispatcher)));
-
             ReactiveAssert.Throws<ArgumentNullException>(() => Observable.ObserveOn<int>(default(IObservable<int>), new SynchronizationContext()));
             ReactiveAssert.Throws<ArgumentNullException>(() => Observable.ObserveOn<int>(someObservable, default(SynchronizationContext)));
 
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherObservable.ObserveOnDispatcher<int>(default(IObservable<int>)));
+#endif
         }
 
 #if HAS_WINFORMS
@@ -122,6 +132,7 @@ namespace ReactiveTests.Tests
         }
 #endif
 
+#if !NO_WINDOWS_THREADING
         [TestMethod]
         [Asynchronous]
         public void ObserveOn_Dispatcher()
@@ -221,6 +232,7 @@ namespace ReactiveTests.Tests
                 }));
             });
         }
+#endif
 
         #endregion
 
@@ -239,6 +251,7 @@ namespace ReactiveTests.Tests
             ReactiveAssert.Throws<ArgumentNullException>(() => ControlObservable.SubscribeOn<int>(someObservable, default(Label)));
 #endif
 
+#if !NO_WINDOWS_THREADING
 #if USE_SL_DISPATCHER
             ReactiveAssert.Throws<ArgumentNullException>(() => Observable.SubscribeOn<int>(default(IObservable<int>), new DispatcherScheduler(System.Windows.Deployment.Current.Dispatcher)));
 #else
@@ -257,6 +270,7 @@ namespace ReactiveTests.Tests
             ReactiveAssert.Throws<ArgumentNullException>(() => Observable.SubscribeOn<int>(someObservable, default(SynchronizationContext)));
 
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherObservable.SubscribeOnDispatcher<int>(default(IObservable<int>)));
+#endif
         }
 
 #if HAS_WINFORMS
@@ -325,6 +339,7 @@ namespace ReactiveTests.Tests
         }
 #endif
 
+#if !NO_WINDOWS_THREADING
         [TestMethod]
         [Asynchronous]
         public void SubscribeOn_Dispatcher()
@@ -421,6 +436,7 @@ namespace ReactiveTests.Tests
                 }));
             });
         }
+#endif
 
         #endregion
 

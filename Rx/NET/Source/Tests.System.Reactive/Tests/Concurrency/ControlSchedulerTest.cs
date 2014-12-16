@@ -8,7 +8,14 @@ using System.Reactive.Disposables;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using Microsoft.Reactive.Testing;
 
 namespace ReactiveTests.Tests

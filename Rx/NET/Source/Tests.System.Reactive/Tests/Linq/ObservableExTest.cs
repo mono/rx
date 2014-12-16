@@ -7,7 +7,14 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using ReactiveTests.Dummies;
 
 namespace ReactiveTests.Tests
@@ -1463,6 +1470,7 @@ namespace ReactiveTests.Tests
             ReactiveAssert.Throws<ArgumentNullException>(() => ObservableEx.ManySelect<int, int>(DummyObservable<int>.Instance, null));
         }
 
+#if !MONOTOUCH && !MONODROID // mcs rejects to compile this use of generic extension method.
         [TestMethod]
         public void ManySelect_Law_1()
         {
@@ -1473,6 +1481,7 @@ namespace ReactiveTests.Tests
 
             Assert.IsTrue(left.SequenceEqual(right).First());
         }
+#endif
 
         [TestMethod]
         public void ManySelect_Law_2()

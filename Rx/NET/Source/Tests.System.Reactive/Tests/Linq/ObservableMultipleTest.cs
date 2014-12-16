@@ -10,7 +10,14 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Reactive.Subjects;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using ReactiveTests.Dummies;
 
 #if !NO_TPL
@@ -1866,6 +1873,9 @@ namespace ReactiveTests.Tests
             res.Messages.AssertEqual(expected);
         }
 
+#if MONODROID
+		[IgnoreAttribute ("monodroid runtime bug causes it blocking")]
+#endif
         [TestMethod]
         public void Catch_TailRecursive2()
         {

@@ -9,7 +9,14 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace ReactiveTests.Tests
 {
@@ -145,7 +152,7 @@ namespace ReactiveTests.Tests
         }
 
         [TestMethod]
-        [Timeout(1000)]
+        //[Timeout(1000)]
         public void Bug_1333()
         {
             var sema = new Semaphore(0, 1);

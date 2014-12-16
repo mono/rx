@@ -7,7 +7,14 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Threading;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace ReactiveTests.Tests
 {
@@ -732,12 +739,18 @@ namespace ReactiveTests.Tests
         }
 
         [TestMethod]
-        public void NotifyOn_Scheduler_OnCompleted()
+#if MONOTOUCH
+        [Ignore ("This causes AOT crash")]
+#endif
+		public void NotifyOn_Scheduler_OnCompleted()
         {
             NotifyOn_Scheduler(true);
         }
 
         [TestMethod]
+#if MONOTOUCH
+        [Ignore ("This causes AOT crash")]
+#endif
         public void NotifyOn_Scheduler_OnError()
         {
             NotifyOn_Scheduler(false);

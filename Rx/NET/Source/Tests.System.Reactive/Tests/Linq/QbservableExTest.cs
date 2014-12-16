@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
+#if !NO_REFLECTION_EMIT
 #if !SILVERLIGHTM7
 
 using System;
@@ -8,7 +9,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reactive.Linq;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace ReactiveTests.Tests
 {
@@ -70,4 +78,5 @@ namespace ReactiveTests.Tests
     }
 }
 
+#endif
 #endif

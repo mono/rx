@@ -41,3 +41,17 @@ type inference for lambdas, so I skipped it in Mono.Reactive.Testing_test.dll.
 Note that the actual class library build is done in mono/mcs/class and
 there is a build script that generates required source list etc.
 
+
+NuGet packaging
+---------------
+
+NuGet supports Xamarin.Android and Xamarin.iOS since version 2.5, so I have
+created nuspecs for each.
+
+On non-Windows environment you can build NuGet packages by running:
+
+	mono /path/to/sources/for/nuget/src/CommandLine/bin/Release/NuGet.exe \
+	    pack Rx/NET/Source/Rx_Xamarin/ReactiveExtensionsForAndroid.nuspec 
+	mono /path/to/sources/for/nuget/src/CommandLine/bin/Release/NuGet.exe \
+	    pack Rx/NET/Source/Rx_Xamarin/ReactiveExtensionsForiOS.nuspec 
+

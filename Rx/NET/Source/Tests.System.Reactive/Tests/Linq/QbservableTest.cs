@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
+#if !NO_REFLECTION_EMIT
 #if !SILVERLIGHTM7
 
 using System;
@@ -14,7 +15,14 @@ using System.Reactive.Subjects;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using Microsoft.Reactive.Testing;
 
 namespace ReactiveTests.Tests
@@ -863,14 +871,18 @@ namespace ReactiveTests.Tests
         {
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbMy, default(IScheduler)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbMy, default(SynchronizationContext)));
+#if !NO_WINDOWS_THREADING
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbMy, default(DispatcherScheduler)));
+#endif
 #if HAS_WINFORMS
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbMy, default(ControlScheduler)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbNull, new ControlScheduler(new System.Windows.Forms.Form())));
 #endif
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbNull, Scheduler.Immediate));
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbNull, new SynchronizationContext()));
-            ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbNull, DispatcherScheduler.Instance));
+#if !NO_WINDOWS_THREADING
+			ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.ObserveOn(_qbNull, DispatcherScheduler.Instance));
+#endif
         }
 
         [TestMethod]
@@ -878,7 +890,9 @@ namespace ReactiveTests.Tests
         {
             _qbMy.ObserveOn(Scheduler.Immediate);
             _qbMy.ObserveOn(new SynchronizationContext());
-            Qbservable.ObserveOn(_qbMy, DispatcherScheduler.Instance);
+#if !NO_WINDOWS_THREADING
+			Qbservable.ObserveOn(_qbMy, DispatcherScheduler.Instance);
+#endif
         }
 
         [TestMethod]
@@ -1144,10 +1158,14 @@ namespace ReactiveTests.Tests
         {
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbMy, default(IScheduler)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbMy, default(SynchronizationContext)));
-            ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbMy, default(DispatcherScheduler)));
+#if !NO_WINDOWS_THREADING
+			ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbMy, default(DispatcherScheduler)));
+#endif
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbNull, Scheduler.Immediate));
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbNull, new SynchronizationContext()));
-            ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbNull, DispatcherScheduler.Instance));
+#if !NO_WINDOWS_THREADING
+			ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbNull, DispatcherScheduler.Instance));
+#endif
 #if HAS_WINFORMS
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbMy, default(ControlScheduler)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Qbservable.SubscribeOn(_qbNull, new ControlScheduler(new System.Windows.Forms.Form())));
@@ -1159,7 +1177,9 @@ namespace ReactiveTests.Tests
         {
             _qbMy.SubscribeOn(Scheduler.Immediate);
             _qbMy.SubscribeOn(new SynchronizationContext());
-            Qbservable.SubscribeOn(_qbMy, DispatcherScheduler.Instance);
+#if !NO_WINDOWS_THREADING
+			Qbservable.SubscribeOn(_qbMy, DispatcherScheduler.Instance);
+#endif
 #if HAS_WINFORMS
             _qbMy.SubscribeOn(new ControlScheduler(new System.Windows.Forms.Form()));
 #endif
@@ -2111,4 +2131,5 @@ namespace ReactiveTests.Tests
     }
 }
 
+#endif
 #endif

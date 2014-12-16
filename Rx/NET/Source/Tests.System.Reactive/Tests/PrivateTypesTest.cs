@@ -3,7 +3,14 @@
 #if !SILVERLIGHT // Reflection security restrictions
 using System;
 using System.Linq;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using Microsoft.Reactive.Testing;
 using System.Reactive.Linq;
 

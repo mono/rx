@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{227886A4-687B-49E5-998C-F6ECE600A5DE}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>System.Reactive</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>System.Reactive.Providers</AssemblyName>
+    <ProductSignAssembly>true</ProductSignAssembly>
+    <DefineConstants>NO_TASK_DELAY;NO_WINDOWS_THREADING;NO_REMOTING;NO_REFLECTION_EMIT;NO_EXPRESSIONS;HAS_AWAIT;NUNIT;$(SignAssemblySpec)__UNIFIED__;</DefineConstants>
+    <additionalargs>-delaySign</additionalargs>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <ConsolePause>False</ConsolePause>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;NO_TASK_DELAY;NO_WINDOWS_THREADING;NO_REMOTING;NO_REFLECTION_EMIT;NO_EXPRESSIONS;HAS_AWAIT;NUNIT;$(SignAssemblySpec)</DefineConstants>
+    <OutputPath>bin\unified\AnyCPU\Debug</OutputPath>
+    <BaseIntermediateOutputPath>obj\unified\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>obj\unified\AnyCPU\Debug</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ConsolePause>False</ConsolePause>
+    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\unified\AnyCPU\Release</OutputPath>
+    <BaseIntermediateOutputPath>obj\unified\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>obj\unified\AnyCPU\Release</IntermediateOutputPath>
+    <DefineConstants>NO_TASK_DELAY;NO_WINDOWS_THREADING;NO_REMOTING;NO_REFLECTION_EMIT;NO_EXPRESSIONS;HAS_AWAIT;NUNIT;$(SignAssemblySpec);__UNIFIED__;</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!--
+    <TargetFrameworkIdentifier>iOS</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v2.0.5</TargetFrameworkVersion>
+    -->
+    <!-- NoStdLib>true</NoStdLib -->
+    <BuildPlatform>MOBILE</BuildPlatform>
+    <BuildFlavor>MONOTOUCH</BuildFlavor>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="MonoTouch.NUnitLite" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.Reactive.Core\ios_System.Reactive.Core.csproj">
+      <Project>{B71E4ED3-46FC-4A74-9703-10B534F65BB9}</Project>
+      <Name>ios_System.Reactive.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Reactive.Interfaces\ios_System.Reactive.Interfaces.csproj">
+      <Project>{DDCF03D5-8FE6-49B3-B6F6-77694ECA9D6C}</Project>
+      <Name>ios_System.Reactive.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Reactive.Linq\ios_System.Reactive.Linq.csproj">
+      <Project>{7A88F0ED-CFBE-4C23-91BF-796F45F62DAF}</Project>
+      <Name>ios_System.Reactive.Linq</Name>
+    </ProjectReference>
+    <!--
+    <ProjectReference Include="..\Andr.Unit\Android.NUnitLite\Android.NUnitLite.csproj">
+      <Project>{6A005891-A3D6-4398-A729-F645397D573A}</Project>
+      <Name>Android.NUnitLite</Name>
+    </ProjectReference>
+    -->
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+    <Compile Include="..\..\..\Microsoft.Reactive.Testing\ColdObservable.cs">
+      <Link>ColdObservable.cs</Link>
+    </Compile>
+    -->
+    <Compile Include="..\..\..\..\System.Reactive.Providers\GlobalSuppressions.cs">
+      <Link>GlobalSuppressions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Internal\Constants.cs">
+      <Link>Reactive\Internal\Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Joins\QueryablePattern.cs">
+      <Link>Reactive\Joins\QueryablePattern.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Joins\QueryablePlan.cs">
+      <Link>Reactive\Joins\QueryablePlan.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Linq\ExpressionVisitor.cs">
+      <Link>Reactive\Linq\ExpressionVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Linq\Observable.Queryable.cs">
+      <Link>Reactive\Linq\Observable.Queryable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Linq\Qbservable.cs">
+      <Link>Reactive\Linq\Qbservable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Linq\Qbservable.Generated.cs">
+      <Link>Reactive\Linq\Qbservable.Generated.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\Linq\Qbservable.Joins.cs">
+      <Link>Reactive\Linq\Qbservable.Joins.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Reactive\ObservableQuery.cs">
+      <Link>Reactive\ObservableQuery.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\System.Reactive.Providers\Strings_Providers.Generated.cs">
+      <Link>Strings_Providers.Generated.cs</Link>
+    </Compile>
+    <EmbeddedResource Include="..\..\..\..\System.Reactive.Providers\Strings_Providers.resx">
+      <Link>Strings_Providers.resx</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+</Project>

@@ -1,4 +1,5 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
+#if !NO_WINDOWS_THREADING
 
 using System;
 using System.Diagnostics;
@@ -7,7 +8,14 @@ using System.Reactive.Disposables;
 using System.Threading;
 using System.Windows.Threading;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 #if SILVERLIGHT && !SILVERLIGHTM7
 using Microsoft.Silverlight.Testing;
@@ -258,3 +266,5 @@ namespace ReactiveTests.Tests
 #endif
     }
 }
+
+#endif

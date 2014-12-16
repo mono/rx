@@ -11,7 +11,14 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading;
 using Microsoft.Reactive.Testing;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace ReactiveTests.Tests
 {
@@ -847,7 +854,10 @@ namespace ReactiveTests.Tests
         }
 
         [TestMethod]
-        public void FromEvent_SynchronizationContext()
+#if MONOTOUCH
+        [Ignore ("This causes AOT crash")]
+#endif
+		public void FromEvent_SynchronizationContext()
         {
             var beforeSubscribeNull = false;
             var afterSubscribeNull = false;

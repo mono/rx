@@ -9,7 +9,14 @@ using System.Reactive.Linq;
 using System.Reactive.PlatformServices;
 using System.Runtime.CompilerServices;
 using System.Threading;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using Microsoft.Reactive.Testing;
 
 #if HAS_WINFORMS
@@ -50,9 +57,11 @@ namespace ReactiveTests.Tests
             ReactiveAssert.Throws<ArgumentNullException>(() => Scheduler.CurrentThread.Schedule(default(Action)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Scheduler.CurrentThread.Schedule(TimeSpan.Zero, default(Action)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Scheduler.CurrentThread.Schedule(DateTimeOffset.MaxValue, default(Action)));
+#if !NO_WINDOWS_THREADING
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherScheduler.Instance.Schedule(default(Action)));
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherScheduler.Instance.Schedule(TimeSpan.Zero, default(Action)));
             ReactiveAssert.Throws<ArgumentNullException>(() => DispatcherScheduler.Instance.Schedule(DateTimeOffset.MaxValue, default(Action)));
+#endif
             ReactiveAssert.Throws<ArgumentNullException>(() => Scheduler.Immediate.Schedule(default(Action)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Scheduler.Immediate.Schedule(TimeSpan.Zero, default(Action)));
             ReactiveAssert.Throws<ArgumentNullException>(() => Scheduler.Immediate.Schedule(DateTimeOffset.MaxValue, default(Action)));
@@ -326,7 +335,7 @@ namespace ReactiveTests.Tests
         [TestMethod]
         public void Scheduler_Periodic_HostLifecycleManagement()
         {
-            var cur = AppDomain.CurrentDomain.BaseDirectory;
+            var cur = Utils.GetTestBaseDirectory();
 
             var domain = AppDomain.CreateDomain("HLN", null, new AppDomainSetup { ApplicationBase = cur });
 

@@ -4,7 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;

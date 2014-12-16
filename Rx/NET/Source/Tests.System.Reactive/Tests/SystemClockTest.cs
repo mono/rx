@@ -7,7 +7,14 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.PlatformServices;
+#if NUNIT
+using NUnit.Framework;
+using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
+using TestMethodAttribute = NUnit.Framework.TestAttribute;
+using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
+#else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+#endif
 
 namespace ReactiveTests.Tests
 {
@@ -26,7 +33,7 @@ namespace ReactiveTests.Tests
     {
         private void Run(CrossAppDomainDelegate a)
         {
-            var domain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, new AppDomainSetup { ApplicationBase = AppDomain.CurrentDomain.BaseDirectory });
+            var domain = AppDomain.CreateDomain(Guid.NewGuid().ToString(), null, new AppDomainSetup { ApplicationBase = Utils.GetTestBaseDirectory() });
             domain.DoCallBack(a);
             AppDomain.Unload(domain);
         }

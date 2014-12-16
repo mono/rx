@@ -8,7 +8,9 @@ using System.Text;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 
-#if WINDOWS8
+#if NUNIT
+using NUnit.Framework;
+#elif WINDOWS8
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #else
 using Microsoft.VisualStudio.TestTools.UnitTesting;
